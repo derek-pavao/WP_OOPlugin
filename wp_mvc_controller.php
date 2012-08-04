@@ -5,7 +5,20 @@ class WP_MVC_Controller extends WP_MVC_Object{
 
 public function __construct(){
 	
-	foreach( get_class_methods($this) as $method ){
+	$this->call_wordpress_actions_and_filters( get_class_methods($this) );
+	
+}// end __construct();
+
+
+
+
+/*********************************************************
+**			Private Methods Beyond This Point 			**
+*********************************************************/
+
+private function call_wordpress_actions_and_filters( $methods ){
+
+	foreach( $methods as $method ){
 		if( '__construct' != $method ){
 			if( $this->is_action( $method) ){
 
@@ -20,14 +33,8 @@ public function __construct(){
 			}
 		}
 	}
-}// end __construct();
 
-
-
-
-/*********************************************************
-**			Private Methods Beyond This Point 			**
-*********************************************************/
+}// end call_wordpress_actions_and_filters();
 
 /**
  * Method takes the name of the method being called and parses it to find out

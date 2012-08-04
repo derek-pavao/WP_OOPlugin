@@ -26,8 +26,8 @@ class WP_MVC_Object {
 	    $trace = $e->getTrace();
 	    //position 0 would be the line that called this function so we ignore it
 	    $call = $trace[1];
-	    
-	    return dirname($call['file']).'/views';
+
+	    return dirname(dirname($call['file'])).'/views';
 	}// end get_view_directory();
 
 	

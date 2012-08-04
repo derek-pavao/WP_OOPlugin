@@ -5,7 +5,7 @@ class WP_MVC_Controller extends WP_MVC_Object{
 
 public function __construct(){
 	
-	$this->call_wordpress_actions_and_filters( get_class_methods($this) );
+	$this->call_wp_actions_and_filters( get_class_methods($this) );
 	
 }// end __construct();
 
@@ -16,7 +16,8 @@ public function __construct(){
 **			Private Methods Beyond This Point 			**
 *********************************************************/
 
-private function call_wordpress_actions_and_filters( $methods ){
+private function call_wp_actions_and_filters( $methods ){
+	
 
 	foreach( $methods as $method ){
 		if( '__construct' != $method ){

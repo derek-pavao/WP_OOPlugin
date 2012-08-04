@@ -8,15 +8,15 @@ public function __construct(){
 	foreach( get_class_methods($this) as $method ){
 		if( '__construct' != $method ){
 			if( $this->is_action( $method) ){
-				//echo 'add_action(\''.$method.'\', array($this, \''.$method.'\'));';
-				$action_name = str_replace('action_', '', $method);
 
+				$action_name = $this->get_action_name( $method );
 				add_action("$action_name", array($this, "$method"));
 				
 			} else if( $this->is_filter( $method ) ){
-				//echo 'add_filter(\''.$method.'\', array($this, \''.$method.'\'));';
-				$filter_name = str_replace('filter_', '', $method);
+				
+				$filter_name = $this->get_filter_name( $method );
 				add_filter("$filter_name", array($this, "$method"));
+
 			}
 		}
 	}
@@ -24,6 +24,35 @@ public function __construct(){
 
 
 
+
+/*********************************************************
+**			Private Methods Beyond This Point 			**
+*********************************************************/
+
+/**
+ * Method takes the name of the method being called and parses it to find out
+ * the filter name.
+ *
+ * @param string $method_name the full name of the method being called
+ * @return string the name of the action to call the method on.
+ */
+private function get_filter_name( $method_name ){
+	$method_arr = explode('__', $method_name, 2);
+	return str_replace('filter_', '', $method_arr[0]);
+}// end get_filter_name();
+
+
+/**
+ * Method takes the name of the method being called and parses it to find out
+ * the action name.
+ * 
+ * @param string $method_name the full name of the method being called
+ * @return string the name of the action to call the method on
+ */
+private function get_action_name( $method_name ){
+	$method_arr = explode('__', $method_name, 2);
+	return str_replace('action_', '', $method_arr[0]);
+}// get_action_name();
 
 
 

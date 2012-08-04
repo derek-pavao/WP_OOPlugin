@@ -16,7 +16,7 @@ class WP_MVC_Object {
 			foreach( $data as $key => $value) { $$key = $value; }
 		}
 
-		include($calling_class_directory.'/views/'.$current_view);
+		include($calling_class_directory.'/'.$current_view);
 	
 	}// end render();
 
@@ -26,7 +26,8 @@ class WP_MVC_Object {
 	    $trace = $e->getTrace();
 	    //position 0 would be the line that called this function so we ignore it
 	    $call = $trace[1];
-	    return dirname($call['file']);
+	    
+	    return dirname($call['file']).'/views';
 	}// end get_view_directory();
 
 	

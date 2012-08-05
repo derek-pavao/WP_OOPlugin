@@ -1,16 +1,16 @@
 <?php
 /*
-Plugin Name: OOPlugin
+Plugin Name: WP_OOPlugin
 Description: This plugin adds MVC type features to a plugin authors tool belts. Please note this plugin doesn't "Do Anything on its own"
 Version: 0.0.1
 Author: Derek Pavao
 Author URI: http://www.derekpavao.com
 */
-class OOPlugin {
+class WP_OOPlugin {
 
 
 	function __construct(){
-		include_once ABSPATH . 'wp-content/plugins/ooplugin/wp_mvc_controller.php';
+		include_once ABSPATH . 'wp-content/plugins/wp_ooplugin/wp_ooplugin_controller.php';
 
 		if( $active_plugins = get_option('active_plugins') ){
 			foreach( $active_plugins as $plugin ){
@@ -29,6 +29,7 @@ class OOPlugin {
  * @return (void)
  */
 	function instantiate_controllers( $plugin_file ){
+
 
 		$plugin_directory = dirname( $plugin_file );
 
@@ -55,5 +56,5 @@ class OOPlugin {
 	}// end instantiate_controllers();
 
 }
-$ooplugin = new OOPlugin;
+$ooplugin = new WP_OOPlugin;
 

@@ -1,7 +1,7 @@
 <?php 
-include_once 'wp_mvc_object.php';
+include_once 'wp_ooplugin_object.php';
 
-class WP_MVC_Controller extends WP_MVC_Object{
+class WP_OOPlugin_Controller extends WP_OOPlugin_Object{
 
 public function __construct(){
 	

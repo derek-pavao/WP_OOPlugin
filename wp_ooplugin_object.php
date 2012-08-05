@@ -1,5 +1,5 @@
 <?php
-class WP_MVC_Object {
+class WP_OOPlugin_Object {
 
 	protected function render( $view = '', $data = array() ){
 		if( is_array($view) ){

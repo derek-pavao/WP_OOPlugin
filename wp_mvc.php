@@ -21,7 +21,13 @@ class OOPlugin {
 		}
 	}// end __construct();
 
-
+/**
+ * Method instantiates controllers in your plugins so you don't have to instantiate them 
+ * yourselves
+ * 
+ * @param (string) plugin directory / plugin file
+ * @return (void)
+ */
 	function instantiate_controllers( $plugin_file ){
 
 		$plugin_directory = dirname( $plugin_file );

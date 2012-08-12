@@ -126,6 +126,7 @@ public function save_meta_box_data( $post_id, $post ){
 
 	if( $post->post_status != 'auto-draft' && $post->post_type == $this->post_type_slug ){
 		
+		
 		$post_type_obj = get_post_type_object( $post->post_type );
 
 		if( !current_user_can( $post_type_obj->cap->edit_post, $post_id ) ) {

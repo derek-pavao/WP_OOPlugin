@@ -104,22 +104,17 @@ public function register_post_type(){
  * This method is the Register Meta Box call back
  */
 public function create_meta_boxes(){
-
-	foreach ( $this->fields as $field_name => $field_info) {
-		$meta_box_callback_name = $this->get_meta_box_callback( $field_name, $field_info );
-		$unique_id = strtolower( Inflector::singularize( $this->class_name ) ) . '_' . $field_name;
-		$title = Inflector::humanize( Inflector::singularize( $field_name ) );
-		$context = (is_array($field_info) && isset( $field_info['context'] )) ? $field_info['context'] : 'advanced';
-		$priority = (is_array($field_info) && isset( $field_info['priority'] )) ? $field_info['priority'] : 'default';
+	foreach( $this->metaboxes as $meta_box => $fields ){
+		$unique_id = strtolower( Inflector::singularize( $this->class_name ) ) . '_' . $meta_box;
+		$title = Inflector::humanize( Inflector::singularize( $meta_box ));
+		$context = 'advanced';
+		$priority = 'default'; 
+		add_meta_box( $unique_id, $title, array($this, 'output_meta_box'), $this->post_type_slug, $context, $priority, array($fields) );
 		
-	
-		add_meta_box( $unique_id, $title, array($this, $meta_box_callback_name), $this->post_type_slug, $context, $priority, array($field_name, $field_info) );
-		
-		
-
 	}
 	
 }// end create_meta_boxes();
+
 
 
 public function save_meta_box_data( $post_id, $post ){
@@ -132,51 +127,56 @@ public function save_meta_box_data( $post_id, $post ){
 		if( !current_user_can( $post_type_obj->cap->edit_post, $post_id ) ) {
 			return $post_id;
 		}
+		foreach( $this->metaboxes as $meta_box_name => $fields ){
+			foreach( $fields as $field_name => $field_info ){
 
-		foreach( $this->fields as $field_name => $field_info ){
+				if( !isset( $_POST[$field_name.'_nonce'] ) || !wp_verify_nonce( $_POST[$field_name.'_nonce'], basename( __FILE__ ) ) ) {
+					return $post_id;
+				}
 
-			if( !isset( $_POST[$field_name.'_nonce'] ) || !wp_verify_nonce( $_POST[$field_name.'_nonce'], basename( __FILE__ ) ) ) {
-				return $post_id;
+				$current_meta_value = get_post_meta( $post_id, $field_name, true );
+				$new_meta_value = $_POST[$field_name];
+
+				if( $new_meta_value && '' == $current_meta_value ){
+
+					add_post_meta( $post_id, $field_name, $_POST[$field_name], true );
+
+				}else if( $new_meta_value && $new_meta_value != $current_meta_value ){
+
+					update_post_meta( $post_id, $field_name, $new_meta_value );
+
+				}else if( '' == $new_meta_value && $field_name ){
+
+					delete_post_meta( $post_id, $field_name, $current_meta_value );
+
+				}
+
+
+
 			}
-
-			$current_meta_value = get_post_meta( $post_id, $field_name, true );
-			$new_meta_value = $_POST[$field_name];
-
-			if( $new_meta_value && '' == $current_meta_value ){
-
-				add_post_meta( $post_id, $field_name, $_POST[$field_name], true );
-
-			}else if( $new_meta_value && $new_meta_value != $current_meta_value ){
-
-				update_post_meta( $post_id, $field_name, $new_meta_value );
-
-			}else if( '' == $new_meta_value && $field_name ){
-
-				delete_post_meta( $post_id, $field_name, $current_meta_value );
-
-			}
-
-
-
 		}
 	}
 }// end save_meta_box_data;
 
 
 
+public function output_meta_box( $object, $params ) {
+	$fields = $params['args'][0];
+	foreach( $fields as $field_name => $field_info ) {
 
-private function get_meta_box_callback( $field_name, $field_value ){
+		$type = ( is_array( $field_info ) ) ? $field_info['type'] : $field_info;
+		$method_name = 'create_default_' . $type . '_meta_box';
+		
+		$this->{$method_name}($object, array($field_name, $field_info));
+		
 
-	$type = (is_array( $field_value )) ? $field_value['type'] : $field_value;
-	
-	return 'create_default_' . $type . '_meta_box';
-	
-	
-
-}// end get_meta_box_callback();
+	}
+}
 
 public function create_default_text_meta_box($object, $args){
+
 	$opts = $this->get_meta_box_options( $object, $args );
+
 
 	if( method_exists($this, $opts['custom_method']) ){
 		$this->{$opts['custom_method']}($object, $opts);
@@ -188,6 +188,13 @@ public function create_default_text_meta_box($object, $args){
 
 		<?php WP_OOPlugin_CPT::nonce( $opts['field_name']) ?>
 		<?php echo $opts['before'] ?>
+		
+		<?php if( is_bool( $opts['label'] ) && $opts['label'] == true ): ?>
+			<label><?php echo Inflector::humanize( $opts['field_name'] ) ?></label>
+		<?php elseif( ! is_bool( $opts['label'] ) && ! empty( $opts['label'] ) ): ?>
+			<label><?php echo $opts['label'] ?></label>
+		<?php endif; ?>
+
 		<input type="text" name="<?php echo $opts['name_attr'] ?>" value="<?php echo $opts['value_attr'] ?>" />
 		<?php echo $opts['after'] ?>
 		<?php if( $opts['description'] ): ?>
@@ -213,10 +220,21 @@ public function create_default_select_meta_box( $object, $args ){
 	<div class="<?php echo $opts['classes'] ?>">
 		<?php WP_OOPlugin_CPT::nonce( $opts['field_name'] ) ?>
 		<?php echo $opts['before'] ?>
+
+		<?php if( is_bool( $opts['label'] ) && $opts['label'] == true ): ?>
+			<label><?php echo Inflector::humanize( $opts['field_name'] ) ?></label>
+		<?php elseif( ! is_bool( $opts['label'] ) && ! empty( $opts['label'] ) ): ?>
+			<label><?php echo $opts['label'] ?></label>
+		<?php endif; ?>
+
 		<select name="<?php echo $opts['field_name'] ?>">
 			<option value="">- Choose -</option>
-			<?php foreach( $opts['field_value']['options'] as $key => $value ): ?>
-			<option value="<?php echo $key ?>"><?php echo $value; ?></option>
+			<?php foreach( $opts['field_info']['options'] as $key => $value ): ?>
+			<?php if ( $key == $opts['value_attr'] ): ?>
+				<option selected="selected" value="<?php echo $key ?>"><?php echo $value; ?></option>
+			<?php else: ?>
+				<option value="<?php echo $key ?>"><?php echo $value; ?></option>
+			<?php endif; ?>
 			<?php endforeach; ?>
 		</select>
 		<?php echo $opts['after'] ?>
@@ -267,16 +285,17 @@ public function create_default_textarea_meta_box( $object, $args ){
 private function get_meta_box_options( $object, $args ){
 	
 	$return = array();
-	$return['field_name'] = $args['args'][0];
-	$return['field_value'] = $args['args'][1];
+	$return['field_name'] = $args[0];
+	$return['field_info'] = $args[1];
 	$class_names[] = Inflector::singularize( $object->post_type );
 	$class_names[] = 'cusotm_meta_' . $return['field_name'];
 	$return['class_names'] = implode(' ', $class_names);
 	$return['name_attr'] =   $return['field_name'];
 	$return['value_attr'] = get_post_meta($object->ID, $return['field_name'], true);
-	$return['description'] = (is_array( $field_value ) && isset( $return['field_value']['description'] )) ? $return['field_value']['description'] : false;
-	$return['before'] = (is_array( $field_value ) && isset( $return['field_value']['before'] )) ? $return['field_value']['before'] : '';
-	$return['after'] = (is_array( $field_value ) && isset( $return['field_value']['after'] )) ? $return['field_value']['after'] : '';
+	$return['description'] = (is_array( $return['field_info'] ) && isset( $return['field_info']['description'] )) ? $return['field_info']['description'] : false;
+	$return['before'] = (is_array( $return['field_info'] ) && isset( $return['field_info']['before'] )) ? $return['field_info']['before'] : '';
+	$return['after'] = (is_array( $return['field_info'] ) && isset( $return['field_info']['after'] )) ? $return['field_info']['after'] : '';
+	$return['label'] = (is_array( $return['field_info'] ) && is_bool( $return['field_info']['label'] )) ? $return['field_info']['label'] : (is_array( $return['field_info'] ) && isset( $return['field_info']['label']) ) ? $return['field_info']['label'] : true;
 	
 
 	$return['custom_method'] = 'create_' . $return['field_name'] . '_meta_box';

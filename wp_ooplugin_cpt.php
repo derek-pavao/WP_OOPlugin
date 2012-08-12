@@ -105,15 +105,15 @@ public function register_post_type(){
  */
 public function create_meta_boxes(){
 
-	foreach ( $this->fields as $field_name => $field_value) {
-		$meta_box_callback_name = $this->get_meta_box_callback( $field_name, $field_value );
+	foreach ( $this->fields as $field_name => $field_info) {
+		$meta_box_callback_name = $this->get_meta_box_callback( $field_name, $field_info );
 		$unique_id = strtolower( Inflector::singularize( $this->class_name ) ) . '_' . $field_name;
 		$title = Inflector::humanize( Inflector::singularize( $field_name ) );
-		$context = (is_array($field_value) && isset( $field_value['context'] )) ? $field_value['context'] : 'advanced';
-		$priority = (is_array($field_value) && isset( $field_value['priority'] )) ? $field_value['priority'] : 'default';
+		$context = (is_array($field_info) && isset( $field_info['context'] )) ? $field_info['context'] : 'advanced';
+		$priority = (is_array($field_info) && isset( $field_info['priority'] )) ? $field_info['priority'] : 'default';
 		
 	
-		add_meta_box( $unique_id, $title, array($this, $meta_box_callback_name), $this->post_type_slug, $context, $priority, array($field_name, $field_value) );
+		add_meta_box( $unique_id, $title, array($this, $meta_box_callback_name), $this->post_type_slug, $context, $priority, array($field_name, $field_info) );
 		
 		
 
@@ -125,7 +125,7 @@ public function create_meta_boxes(){
 public function save_meta_box_data( $post_id, $post ){
 
 	if( $post->post_status != 'auto-draft' && $post->post_type == $this->post_type_slug ){
-
+		
 		$post_type_obj = get_post_type_object( $post->post_type );
 
 		if( !current_user_can( $post_type_obj->cap->edit_post, $post_id ) ) {
@@ -175,15 +175,6 @@ private function get_meta_box_callback( $field_name, $field_value ){
 }// end get_meta_box_callback();
 
 public function create_default_text_meta_box($object, $args){
-	$field_name = $args['args'][0];
-	$field_value = $args['args'][1];
-	$class_names[] = Inflector::singularize( $object->post_type );
-	$class_names[] = 'cusotm_meta_' . $field_name;
-	$name_attr = Inflector::singularize( $object->post_type ) . '_' . $field_name;
-	$description = (is_array( $field_value ) && isset( $field_value['description'] )) ? $field_value['description'] : false;
-	$before = (is_array( $field_value ) && isset( $field_value['before'] )) ? $field_value['before'] : '';
-	$after = (is_array( $field_value ) && isset( $field_value['after'] )) ? $field_value['after'] : '';
-
 	$opts = $this->get_meta_box_options( $object, $args );
 
 	if( method_exists($this, $opts['custom_method']) ){
@@ -196,7 +187,7 @@ public function create_default_text_meta_box($object, $args){
 
 		<?php WP_OOPlugin_CPT::nonce( $opts['field_name']) ?>
 		<?php echo $opts['before'] ?>
-		<input type="text" name="<?php echo $opts['field_name'] ?>" value="<?php echo get_post_meta($object->ID, $opts['field_name'], true) ?>" />
+		<input type="text" name="<?php echo $opts['name_attr'] ?>" value="<?php echo $opts['value_attr'] ?>" />
 		<?php echo $opts['after'] ?>
 		<?php if( $opts['description'] ): ?>
 		<div class="custom_field_description"><?php echo $opts['description'] ?></div>
@@ -280,10 +271,12 @@ private function get_meta_box_options( $object, $args ){
 	$class_names[] = Inflector::singularize( $object->post_type );
 	$class_names[] = 'cusotm_meta_' . $return['field_name'];
 	$return['class_names'] = implode(' ', $class_names);
-	$return['name_attr'] = Inflector::singularize( $object->post_type ) . '_' . $return['field_name'];
+	$return['name_attr'] =   $return['field_name'];
+	$return['value_attr'] = get_post_meta($object->ID, $return['field_name'], true);
 	$return['description'] = (is_array( $field_value ) && isset( $return['field_value']['description'] )) ? $return['field_value']['description'] : false;
 	$return['before'] = (is_array( $field_value ) && isset( $return['field_value']['before'] )) ? $return['field_value']['before'] : '';
 	$return['after'] = (is_array( $field_value ) && isset( $return['field_value']['after'] )) ? $return['field_value']['after'] : '';
+	
 
 	$return['custom_method'] = 'create_' . $return['field_name'] . '_meta_box';
 

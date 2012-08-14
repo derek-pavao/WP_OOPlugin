@@ -83,7 +83,7 @@ public function register_post_type(){
 	if( isset( $this->map_meta_cap )) $opts['map_meta_cap'] = $this->map_meta_cap;
 	if( isset( $this->hierarchical )) $opts['hierarchical'] = $this->hierarchical;
 	if( isset( $this->supports )) $opts['supports'] = $this->supports;
-	if( isset( $this->fields )) $opts['register_meta_box_cb'] = array($this, 'create_meta_boxes');
+	if( isset( $this->metaboxes )) $opts['register_meta_box_cb'] = array($this, 'create_meta_boxes');
 	if( isset( $this->taxonomies ) ) $opts['taxonomies'] = $this->taxonomies;
 	if( isset( $this->capabilities )) $opts['capabilities'] = $this->capabilities;
 	if( isset( $this->has_archive )) $opts['has_archive'] = $this->has_archive;
@@ -105,6 +105,7 @@ public function register_post_type(){
  */
 public function create_meta_boxes(){
 	foreach( $this->metaboxes as $meta_box => $fields ){
+		print_r($fields);die();
 		$unique_id = strtolower( Inflector::singularize( $this->class_name ) ) . '_' . $meta_box;
 		$title = Inflector::humanize( Inflector::singularize( $meta_box ));
 		$context = 'advanced';

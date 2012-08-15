@@ -11,10 +11,26 @@ private $class_name;
 
 function __construct(){
 
+	$this->class_name = get_class($this);
+	$this->post_type_slug = strtolower($this->class_name);
+
+	if( isset( $this->custom_admin_columns ) && !empty( $this->custom_admin_columns ) ){
+		// register custom column action
+
+		$manage_edit_columns_hook = 'manage_edit-' . $this->post_type_slug . '_columns';
+		$manage_edit_sortable_columns_hook = 'manage_edit-' . $this->post_type_slug . '_sortable_columns';
+		$manage_custom_columns_hook = 'manage_' . $this->post_type_slug . '_posts_custom_column';
+		add_action("$manage_edit_columns_hook", array($this, 'custom_admin_columns'));
+		add_action("$manage_custom_columns_hook", array($this, 'manage_custom_admin_columns') );
+		add_action("$manage_edit_sortable_columns_hook", array($this, 'manage_sortable_custom_admin_columns') );
+
+	}
+
+
 	add_action('init', array($this, 'register_post_type'));
 
 	add_action('save_post', array($this, 'save_meta_box_data'), 10, 2);
-
+	
 
 }// end __construct();
 
@@ -44,11 +60,10 @@ public function create_instance( $class_name ){
  */
 public function register_post_type(){
 	include_once 'libs/inflector.php';
-	$class_name = get_class( $this );
-	$this->class_name = $class_name;
+	$class_name = $this->class_name;
 	$human_class_name = Inflector::humanize( $class_name );
-	$post_type_slug = strtolower( $class_name );
-	$this->post_type_slug = $post_type_slug;
+	$post_type_slug = $this->post_type_slug;
+	
 	$opts = array();
 
 
@@ -105,7 +120,7 @@ public function register_post_type(){
  */
 public function create_meta_boxes(){
 	foreach( $this->metaboxes as $meta_box => $fields ){
-		print_r($fields);die();
+		
 		$unique_id = strtolower( Inflector::singularize( $this->class_name ) ) . '_' . $meta_box;
 		$title = Inflector::humanize( Inflector::singularize( $meta_box ));
 		$context = 'advanced';
@@ -308,6 +323,42 @@ private function get_meta_box_options( $object, $args ){
 static function nonce( $field_name ){
 	wp_nonce_field( basename( __FILE__ ), $field_name . '_nonce' );
 }// end wp_ooplugin_nonce;
+
+
+
+
+public function custom_admin_columns( $columns ){
+	$columns['cb'] = '<input type="checkbox" />';
+	
+
+	foreach( $this->custom_admin_columns as $field_name ){
+		$columns[$field_name] = Inflector::humanize( $field_name );
+	}
+
+	return $columns;
+}// end custom_admin_columns();
+
+
+public function manage_custom_admin_columns( $column ){
+	global $post;
+	if( in_array($column, $this->custom_admin_columns) ){
+		$column_content = get_post_meta( $post->ID, $column, true );
+		echo __( $column_content );
+	}
+
+}// end manage_custom_admin_columns();
+
+
+public function manage_sortable_custom_admin_columns( $columns ){
+
+	foreach( $this->custom_admin_columns as $column_name ) {
+		$columns[$column_name] = $column_name;
+	}
+
+	return $columns;
+
+}// end manage_sortable_custom_admin_columns()
+
 
 
 }// end WP_OOPlugin_CPT class

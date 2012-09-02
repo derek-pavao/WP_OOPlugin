@@ -10,27 +10,29 @@ Table of Contents:
 * [Why WP_OOPlugin?](#why-wp_ooplugin)
 * [Directory Structure](#directory-structure)
 * [How to define custom post types](#how-to-define-custom-post-types)
-    * [How to define custom metaboxes and custom fields](#defining-custom-meta-boxes-and-custom-fields)
 
 - - - 
   
 What is WP_OOPlugin?
 -------------------
+[Back to top](#wp_ooplugin)
 WP_OOPlugin is a WordPress plugin intended to be used by plugin authors to help ease and speed up plugin development.
-
+[Back to top](#wp_ooplugin)
   
 Why WP_OOPlugin?
 ---------------
+[Back to top](#wp_ooplugin)
 I am new to WordPress. Most of my experience, until now is with CakePHP, a RoR (Ruby on Rails) like framework for PHP. Recently, in my professional life, I have been working with WordPress and there are a few things about writing a WordPress plugin I think could be better, so I'd like to change them!
 
 In the CakePHP community there are two very important programming principles that I think could be implemented better in WordPress.
 
 1. Don't Repeat Yourself (DRY)
 2. Convention Over Configuration
-
+[Back to top](#wp_ooplugin)
 
 Directory Structure
 -------------------
+[Back to top](#wp_ooplugin)
 WP_OOPlugin expects your plugins to have a specific directory structure, it is as follows:
 
 * \<YOUR_PLUGIN_DIR_NAME\>
@@ -63,9 +65,11 @@ to tell WordPress meta data about your plugin.
  */
 
 ```
+[Back to top](#wp_ooplugin)
 
 How To Define Custom Post Types.
 ------------------------
+[Back to top](#wp_ooplugin)
 I feel like defining custom post types in WordPress has me repeating my self a lot, defining the output for meta boxes,
 saving the data etc. With WP_OOPlugin I try to define reasonable defaults for a lot of this stuff while still making the 
 defaults customizable.
@@ -147,6 +151,7 @@ From the few lines defined in your Employees class, WP_OOPlugin will create the 
 adding it to the wp-admin because the $public instnce variable was set to true. It will add custom metaboxes and custom
 fields to your add and edit screens. When those forms are submitted WP_OOPlugin will handle creating, updating, and 
 deleting post meta where appropriate.
+[Back to top](#wp_ooplugin)
 
 To Be Continued...
 ------------------

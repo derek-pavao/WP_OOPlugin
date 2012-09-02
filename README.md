@@ -55,11 +55,11 @@ to tell WordPress meta data about your plugin.
 
 ```
 
-Define Custom Post Types
+How To Define Custom Post Types.
 ------------------------
 I feel like defining custom post types in WordPress has me repeating my self a lot, defining the output for meta boxes,
 saving the data etc. With WP_OOPlugin I try to define reasonable defaults for a lot of this stuff while still making the 
-defaults overwritable.
+defaults customizable.
 
 __File Name:__  
 Your file name should be named the plural version of whatever you want to call your custom post type with the 
@@ -75,4 +75,10 @@ class Employees extends WP_OOPlugin_CPT {
 }
 ?>
 ```
+
+A custom post type is defined with WP_OOPlugin by defining instance variables within your class. Many of these instance
+variables correspond directly to the arguments passed to WordPress' register_post_type() function (documentation found
+[here](http://codex.wordpress.org/Function_Reference/register_post_type). In addition to those instance variables,
+WP_OOPlugin also has some of it's own instance variables you can define to help define your custom post type. (For now,
+this documentation is going to concentrate on those WP_OOPlugin specific variables).
 

@@ -49,9 +49,9 @@ to tell WordPress meta data about your plugin.
 ```php
 
 /**
-* Plugin Name: YOUR PLUGIN NAME
-* Description: Some details about what your plugin does
-*/
+ * Plugin Name: YOUR PLUGIN NAME
+ * Description: Some details about what your plugin does
+ */
 
 ```
 

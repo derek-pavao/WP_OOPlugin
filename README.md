@@ -62,7 +62,17 @@ saving the data etc. With WP_OOPlugin I try to define reasonable defaults for a 
 defaults overwritable.
 
 __File Name:__  
-Your file name should be named the plural version whatever you want to call your custom post type with the 
+Your file name should be named the plural version of whatever you want to call your custom post type with the 
 first letter being a capital letter. i.e. Employees.php
 
+__Class Name:__
+Your class name should also be the plural version of whatever you want to call your custom post type. Your class must
+also extend WP_OOPlugin_CPT.
+```php
+<?php
+class Employees extends WP_OOPlugin_CPT {
+  // define your custom post type here
+}
+?>
+```
 

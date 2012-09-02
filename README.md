@@ -42,7 +42,15 @@ View files are called from custom_post_type classes or controller classes so you
 ( ?> ) and output html in the middle of your class file and re-open your php tag ( <?php ) again. Instead you can
 render a view file passing in variables to be used in the view file. More on this later.
 
-
+__\<YOUR_MAIN_PLUGIN_FILE\>.PHP  
+This file is required for WordPress to recognize your plugin. It mostlikely will only contain your plugin comment
+to tell WordPress meta data about your plugin.
+  '''php
+  /**
+   * Plugin Name: YOUR PLUGIN NAME
+   * Description: Some details about what your plugin does
+   */
+  '''
 
 
 

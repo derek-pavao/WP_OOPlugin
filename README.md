@@ -44,13 +44,14 @@ render a view file passing in variables to be used in the view file. More on thi
 
 __\<YOUR_MAIN_PLUGIN_FILE\>.PHP  
 This file is required for WordPress to recognize your plugin. It mostlikely will only contain your plugin comment
-to tell WordPress meta data about your plugin.
-  '''php
-  /**
-   * Plugin Name: YOUR PLUGIN NAME
-   * Description: Some details about what your plugin does
-   */
-  '''
+to tell WordPress meta data about your plugin.  
+
+'''php
+/**
+* Plugin Name: YOUR PLUGIN NAME
+* Description: Some details about what your plugin does
+*/
+'''
 
 
 

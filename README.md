@@ -79,7 +79,7 @@ __File Name:__
 Your file name should be named the plural version of whatever you want to call your custom post type with the 
 first letter being a capital letter. i.e. Employees.php
 
-__Class Name:__
+__Class Name:__  
 Your class name should also be the plural version of whatever you want to call your custom post type. Your class must
 also extend WP_OOPlugin_CPT.
 ```php

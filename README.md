@@ -24,9 +24,9 @@ Directory Structure
 -------------------
 WP_OOPlugin expects your plugins to have a specific directory structure, it is as follows:
 
-* ~YOUR_PLUGIN_DIR_NAME~
+* <YOUR_PLUGIN_DIR_NAME>
     * custom_post_types/
     * controllers/
     * views/
-    * ~YOUR_MAIN_PLUGIN_FILE~.php
+    * <YOUR_MAIN_PLUGIN_FILE>.php
 

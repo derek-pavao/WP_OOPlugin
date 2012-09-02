@@ -78,7 +78,64 @@ class Employees extends WP_OOPlugin_CPT {
 
 A custom post type is defined with WP_OOPlugin by defining instance variables within your class. Many of these instance
 variables correspond directly to the arguments passed to WordPress' register_post_type() function (documentation found
-[here](http://codex.wordpress.org/Function_Reference/register_post_type). In addition to those instance variables,
+[here](http://codex.wordpress.org/Function_Reference/register_post_type)). In addition to those instance variables,
 WP_OOPlugin also has some of it's own instance variables you can define to help define your custom post type. (For now,
 this documentation is going to concentrate on those WP_OOPlugin specific variables).
+
+__DEFINING CUSTOM META BOXES AND CUSTOM FIELDS:__  
+This is where WP_OOPlugin can come in very handy. Your custom post type class has an instance variable called $metaboxes.
+$metaboxes is a multidimensional associative array that defines both your metaboxes and their containing custom fields.
+
+In $metaboxes the first key is the name of the meta box, and it's value is an array that defines the custom fields
+within that meta box. It's key is the name of the custom field and it's value is the definition of the custom field.
+It can be a string ('text' for a text field) or an array of key value pairs defining a more complicated custom field.
+
+I realize this can be a little confusing trying to explain in words so how about an example! In this following example
+we are going to define a custom post type for Employees with two meta boxes, one for "Personal Info" and another for 
+"Address" info. The Personal Info meta box will have two custom fields, "First Name" and "Last Name". The Address
+meta box will contain custom fields for "Street", "City" and "State". The "Street" and "City" custom fields will be
+simple text boxes, but the "State" custom field will be a select box.
+
+__NOTE:__ WP_OOPlugin currently only supports defining text fields and select boxes as custom fields but will be
+extended in the future to handle radio buttons, checkboxes, textareas etc.
+
+```php
+<?php
+class Employees extends WP_OOPlugin_CPT {
+  
+  // This $public instance variable corressponds directly to the public argument given to WordPress' register_post_type()
+  protected $public = TRUE;
+  
+	// This $supports instance variable corressponds directly to the public argument given to WordPress' register_post_type()
+	protected $supports = array('title');
+
+  // The $mteaboxes instance variable is where WP_OOPlugin specific instance variables can come in handy
+	protected $metaboxes = array(
+		'personal_info' => array(
+			'first_name' => 'text',
+			'last_name' => 'text'
+		),
+		'address' => array(
+			'street' => 'text',
+			'city' => 'text',
+			'state' => array(
+				'type' => 'select',
+				'options' => array(
+					'MA' => 'Massachusetts',
+					'RI' => 'Rhode Island',
+					'CT' => 'Connecticut',
+				),
+				'label' => FALSE
+			)
+		)
+	);
+
+}
+```
+
+
+
+
+
+
 

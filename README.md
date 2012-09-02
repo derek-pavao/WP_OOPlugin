@@ -8,7 +8,7 @@ __NOTE:__ This plugin is no where near production ready at this time. It is only
 What is WP_OOPlugin?
 -------------------
 WP_OOPlugin is a WordPress plugin intended to be used by plugin authors to help ease and speed up plugin development.
-- - -
+
   
 Why WP_OOPlugin?
 ---------------
@@ -18,7 +18,7 @@ In the CakePHP community there are two very important programming principles tha
 
 1. Don't Repeat Yourself (DRY)
 2. Convention Over Configuration
-- - -
+
 
 Directory Structure
 -------------------

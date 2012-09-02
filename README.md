@@ -55,5 +55,14 @@ to tell WordPress meta data about your plugin.
 
 ```
 
+Define Custom Post Types
+------------------------
+I feel like defining custom post types in WordPress has me repeating my self a lot, defining the output for meta boxes,
+saving the data etc. With WP_OOPlugin I try to define reasonable defaults for a lot of this stuff while still making the 
+defaults overwritable.
+
+__File Name:__  
+Your file name should be named the plural version whatever you want to call your custom post type with the 
+first letter being a capital letter. i.e. Employees.php
 
 

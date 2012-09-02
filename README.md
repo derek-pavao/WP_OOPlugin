@@ -131,7 +131,16 @@ class Employees extends WP_OOPlugin_CPT {
 	);
 
 }
+?>
 ```
+
+From the few lines defined in your Employees class, WP_OOPlugin will create the custom post type in WordPress
+adding it to the wp-admin because the $public instnce variable was set to true. It will add custom metaboxes and custom
+fields to your add and edit screens. When those forms are submitted WP_OOPlugin will handle creating, updating, and 
+deleting post meta where appropriate.
+
+To Be Continued...
+------------------
 
 
 

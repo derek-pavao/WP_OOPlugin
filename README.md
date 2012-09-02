@@ -31,4 +31,18 @@ WP_OOPlugin expects your plugins to have a specific directory structure, it is a
     * \<YOUR_MAIN_PLUGIN_FILE\>.php
 
 __custom_post_types__:  
-The custom_post_types directory contains class files that define WordPress custom post types and options for those post types
+The custom_post_types directory contains class files that define WordPress custom post types and options for those post types.
+
+__controllers__:  
+The controllers directory contains classes that implement your wordpress action_hooks and filter_hooks.
+
+__views__:  
+The views directory contains view files that contain mostly html with bits of php speckled throughout them.
+View files are called from custom_post_type classes or controller classes so you no longer have to close your php tag
+( ?> ) and output html in the middle of your class file and re-open your php tag ( <?php ) again. Instead you can
+render a view file passing in variables to be used in the view file. More on this later.
+
+
+
+
+

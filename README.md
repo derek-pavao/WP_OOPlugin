@@ -6,10 +6,11 @@ __NOTE:__ This plugin is no where near production ready at this time. It is only
 
 Table of Contents:
 ------------------
-[What is WP_OOPlugin?](#what-is-wp_ooplugin)  
-[Why WP_OOPlugin?](#why-wp_ooplugin)  
-[Directory Structure](#directory-structure)  
-[How to define custom post types](#how-to-define-custom-post-types)
+* [What is WP_OOPlugin?](#what-is-wp_ooplugin)
+* [Why WP_OOPlugin?](#why-wp_ooplugin)
+* [Directory Structure](#directory-structure)
+* [How to define custom post types](#how-to-define-custom-post-types)
+    * [How to define custom metaboxes and custom fields](#defining-custom-meta-boxes-and-custom-fields
 - - - 
   
 What is WP_OOPlugin?

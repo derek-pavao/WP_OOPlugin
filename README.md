@@ -30,3 +30,5 @@ WP_OOPlugin expects your plugins to have a specific directory structure, it is a
     * views/
     * \<YOUR_MAIN_PLUGIN_FILE\>.php
 
+__custom_post_types__:  
+The custom_post_types directory contains class files that define WordPress custom post types and options for those post types

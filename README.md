@@ -46,14 +46,14 @@ __\<YOUR_MAIN_PLUGIN_FILE\>.PHP
 This file is required for WordPress to recognize your plugin. It mostlikely will only contain your plugin comment
 to tell WordPress meta data about your plugin.  
 
-'''php
+```php
 
 /**
 * Plugin Name: YOUR PLUGIN NAME
 * Description: Some details about what your plugin does
 */
 
-'''
+```
 
 
 

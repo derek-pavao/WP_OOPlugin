@@ -3,6 +3,10 @@ __IF YOU STUMBLE ACROSS THIS REPOSITORY, I APPOLOGIZE BUT THE DOCUMENTATION IS N
 WP_OOPlugin
 ===========
 __NOTE:__ This plugin is no where near production ready at this time. It is only posted here on GitHub so I may get feedback from plugin authors in the community! Because I am new to WordPress development it would be silly of me to take this project any further without getting input from other developers.
+
+Table of Contents:
+------------------
+[What is WP_OOPlugin?](#what-is-wp_ooplugin?)
 - - - 
   
 What is WP_OOPlugin?

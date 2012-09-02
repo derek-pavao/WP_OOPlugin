@@ -103,13 +103,13 @@ extended in the future to handle radio buttons, checkboxes, textareas etc.
 <?php
 class Employees extends WP_OOPlugin_CPT {
   
-  // This $public instance variable corressponds directly to the public argument given to WordPress' register_post_type()
-  protected $public = TRUE;
+  	// This $public instance variable corressponds directly to the public argument given to WordPress' register_post_type()
+  	protected $public = TRUE;
   
 	// This $supports instance variable corressponds directly to the public argument given to WordPress' register_post_type()
 	protected $supports = array('title');
 
-  // The $mteaboxes instance variable is where WP_OOPlugin specific instance variables can come in handy
+  	// The $mteaboxes instance variable is where WP_OOPlugin specific instance variables can come in handy
 	protected $metaboxes = array(
 		'personal_info' => array(
 			'first_name' => 'text',

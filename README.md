@@ -28,6 +28,7 @@ In the CakePHP community there are two very important programming principles tha
 
 1. Don't Repeat Yourself (DRY)
 2. Convention Over Configuration  
+  
 [Back to top](#wp_ooplugin)
 
 Directory Structure

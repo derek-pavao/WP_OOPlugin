@@ -83,7 +83,7 @@ public function register_post_type(){
 	if( isset( $this->map_meta_cap )) $opts['map_meta_cap'] = $this->map_meta_cap;
 	if( isset( $this->hierarchical )) $opts['hierarchical'] = $this->hierarchical;
 	if( isset( $this->supports )) $opts['supports'] = $this->supports;
-	if( isset( $this->fields )) $opts['register_meta_box_cb'] = array($this, 'create_meta_boxes');
+	if( isset( $this->metaboxes )) $opts['register_meta_box_cb'] = array($this, 'create_meta_boxes');
 	if( isset( $this->taxonomies ) ) $opts['taxonomies'] = $this->taxonomies;
 	if( isset( $this->capabilities )) $opts['capabilities'] = $this->capabilities;
 	if( isset( $this->has_archive )) $opts['has_archive'] = $this->has_archive;
@@ -134,12 +134,12 @@ public function save_meta_box_data( $post_id, $post ){
 					return $post_id;
 				}
 
-				$current_meta_value = get_post_meta( $post_id, $field_name, true );
+				$current_meta_value = get_post_meta( $post_id, $field_name, TRUE );
 				$new_meta_value = $_POST[$field_name];
 
 				if( $new_meta_value && '' == $current_meta_value ){
 
-					add_post_meta( $post_id, $field_name, $_POST[$field_name], true );
+					add_post_meta( $post_id, $field_name, $_POST[$field_name], TRUE );
 
 				}else if( $new_meta_value && $new_meta_value != $current_meta_value ){
 
@@ -189,7 +189,7 @@ public function create_default_text_meta_box($object, $args){
 		<?php WP_OOPlugin_CPT::nonce( $opts['field_name']) ?>
 		<?php echo $opts['before'] ?>
 		
-		<?php if( is_bool( $opts['label'] ) && $opts['label'] == true ): ?>
+		<?php if( is_bool( $opts['label'] ) && $opts['label'] == TRUE ): ?>
 			<label><?php echo Inflector::humanize( $opts['field_name'] ) ?></label>
 		<?php elseif( ! is_bool( $opts['label'] ) && ! empty( $opts['label'] ) ): ?>
 			<label><?php echo $opts['label'] ?></label>
@@ -220,8 +220,8 @@ public function create_default_select_meta_box( $object, $args ){
 	<div class="<?php echo $opts['classes'] ?>">
 		<?php WP_OOPlugin_CPT::nonce( $opts['field_name'] ) ?>
 		<?php echo $opts['before'] ?>
-
-		<?php if( is_bool( $opts['label'] ) && $opts['label'] == true ): ?>
+		
+		<?php if( is_bool( $opts['label'] ) && $opts['label'] == TRUE ): ?>
 			<label><?php echo Inflector::humanize( $opts['field_name'] ) ?></label>
 		<?php elseif( ! is_bool( $opts['label'] ) && ! empty( $opts['label'] ) ): ?>
 			<label><?php echo $opts['label'] ?></label>
@@ -291,11 +291,11 @@ private function get_meta_box_options( $object, $args ){
 	$class_names[] = 'cusotm_meta_' . $return['field_name'];
 	$return['class_names'] = implode(' ', $class_names);
 	$return['name_attr'] =   $return['field_name'];
-	$return['value_attr'] = get_post_meta($object->ID, $return['field_name'], true);
-	$return['description'] = (is_array( $return['field_info'] ) && isset( $return['field_info']['description'] )) ? $return['field_info']['description'] : false;
+	$return['value_attr'] = get_post_meta($object->ID, $return['field_name'], TRUE);
+	$return['description'] = (is_array( $return['field_info'] ) && isset( $return['field_info']['description'] )) ? $return['field_info']['description'] : FALSE;
 	$return['before'] = (is_array( $return['field_info'] ) && isset( $return['field_info']['before'] )) ? $return['field_info']['before'] : '';
 	$return['after'] = (is_array( $return['field_info'] ) && isset( $return['field_info']['after'] )) ? $return['field_info']['after'] : '';
-	$return['label'] = (is_array( $return['field_info'] ) && is_bool( $return['field_info']['label'] )) ? $return['field_info']['label'] : (is_array( $return['field_info'] ) && isset( $return['field_info']['label']) ) ? $return['field_info']['label'] : true;
+	$return['label'] = (is_array( $return['field_info'] ) && is_bool( $return['field_info']['label'] )) ? $return['field_info']['label'] : (is_array( $return['field_info'] ) && isset( $return['field_info']['label']) ) ? $return['field_info']['label'] : TRUE;
 	
 
 	$return['custom_method'] = 'create_' . $return['field_name'] . '_meta_box';

@@ -228,6 +228,65 @@ class My_Test_Controller extends WP_OOPlugin_Controller {
 
 [Back to top](#wp_ooplugin)
 
+How To Render Views
+-------------------
+[Back to top](#wp_ooplugin)  
+Some hooks in WordPress require that you output some html markup. The two methods I have come across for this are to either
+echo each line, wich can get annoying to look at, or to close your php tag in the middle of a method, output some html
+and reopen your php tag and continue with your class, this just feels wrong and dirty to me.
+
+With WP_OOPlugin both controller classes and custom post type classes have a special method called render. The render
+method allows you to put all the html output required by your plugin into a view file inside your views directory.
+
+The render method takes two parameters, both are completely optional. The first parameter (string) $view is the name of
+the file in your views directory you want to render excluding the .php extension. The second parameter (array) $data is
+a set of key value pairs to pass into the view where the key will be the name of the variable when you are in your view file.
+
+Calling render without specifying $view will try to render a file in your views directory with the same name as
+the method that called it. Render can be called four different ways.
+1. With no parameters, $this->render().
+    * This will render a file in your views directory with the same name as the method that called the render() method
+2. With just the $data array, $this->render( array( 'var1' => 'value1', 'var2' => 'value2' ) );
+    * This will still render a file in your views directory with the same name as the method that called the render() method, however the view file will now have local variables $var1, and $var2 available to it.
+3. With both $view and $data, $this->render( 'my_view', array( 'var1' => 'value1', 'var2' => 'value2' ) );
+    * This will render a view file located at views/my_view.php. That view file will have local variables $var1 and $var2 available to it.
+4. With $view but not $data, $this->render( 'my_view' );
+    * This will render a view file located at views/my_view.php, but will not pass any data to that view.
+
+```php
+<?php
+// controllers/My_Test_Controller.php
+
+class My_Test_Controller extends WP_OOPlugin_Controller {
+
+	function action_admin_init(){
+		
+		$this->render( 'my_sweet_view', array(
+			'class_name' => 'my-sweet-css-class',
+			'id_name' => 'my-sweet-css-id'
+		));
+		
+	}
+
+
+}
+?>
+```
+
+```php
+<!--  views/my_sweet_view.php 
+      This view file will have two local variables, $class_name and $id_name
+-->
+
+<div class="<?php echo $class_name ?>" id="<?php echo $id_name ?>">
+	<!-- HTML HERE -->
+</div>
+
+```
+
+
+[Back to top](#wp_ooplugin)
+
 To Be Continued...
 ------------------
 

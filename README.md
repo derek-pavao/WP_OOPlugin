@@ -70,8 +70,8 @@ to tell WordPress meta data about your plugin.
 ```  
 [Back to top](#wp_ooplugin)
 
-How To Define Custom Post Types.
-------------------------
+How To Define Custom Post Types
+-------------------------------
 [Back to top](#wp_ooplugin)  
 I feel like defining custom post types in WordPress has me repeating my self a lot, defining the output for meta boxes,
 saving the data etc. With WP_OOPlugin I try to define reasonable defaults for a lot of this stuff while still making the 

@@ -154,6 +154,27 @@ fields to your add and edit screens. When those forms are submitted WP_OOPlugin 
 deleting post meta where appropriate.  
 [Back to top](#wp_ooplugin)
 
+__DEFINING CUSTOM ADMIN COLUMNS__  
+By default WordPress does not include any custom fields in the admin table. WP_OOPlugin puts an instance variable 
+in your custom post type class (i.e. Employees) to define which custom fields should be in your admin table view.
+The instance varible is called $custom_admin_columns and is a sequential array of custom field names.  
+_NOTE:_ The sorting functionality does not currently work when defining custom admin columns but is on my todo list.
+
+```php
+<?php
+class Employees extends WP_OOPlugin_CPT {
+	// ... other code here for defining the cpt
+	
+	protected $custom_admin_columns = array(
+		'first_name',
+		'last_name',
+		'city'
+	);
+	
+	// ... other code here for defining the cpt
+?>
+```
+
 To Be Continued...
 ------------------
 

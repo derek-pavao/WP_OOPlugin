@@ -11,6 +11,7 @@ Table of Contents:
 * [Directory Structure](#directory-structure)
 * [How to define custom post types](#how-to-define-custom-post-types)
 * [How to call WordPress hooks](#how-to-call-wordpress-hooks)
+* [How to render views](#how-to-render-views)
 
 - - - 
   

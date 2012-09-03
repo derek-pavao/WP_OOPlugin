@@ -201,10 +201,10 @@ Your class name should be the same as your file name. (\<Your_Descriptive_Name\>
 WP_OOPlugin_Controller.
 
 __Calling WordPress Hooks:__  
-Instead of using add\_action() or add\_filter(), WP_OOPlugin provides a naming convention for calling WordPress hooks.
+Instead of using add\_action() or add\_filter(), WP\_OOPlugin provides a naming convention for calling WordPress hooks.
 Your method name is to start with action or filter depending if you are calling an action or filter hook respectively,
 followed by an underscore and the action name, followed by two underscores and a descriptive name telling
-what that method is doing (action_HOOK_NAME__DESCRIPTIVE_NAME). Putting the portion with the two underscores and a 
+what that method is doing (action\_HOOK\_NAME\_\_DESCRIPTIVE\_NAME). Putting the portion with the two underscores and a 
 descriptive name is completely optional. The only reason for having this is so you can have more than one method executed
 on the same hook.
 

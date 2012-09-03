@@ -245,17 +245,17 @@ a set of key value pairs to pass into the view where the key will be the name of
 Calling render without specifying $view will try to render a file in your views directory with the same name as
 the method that called it. Render can be called four different ways.  
 
-1. With no parameters, $this->render().  
-	* This will render a file in your views directory with the same name as the method that called the render() method  
+1. With no parameters, $this->render().
+	* This will render a file in your views directory with the same name as the method that called the render() method
  
-2. With just the $data array, $this->render( array( 'var1' => 'value1', 'var2' => 'value2' ) );  
-	* This will still render a file in your views directory with the same name as the method that called the render() method, however the view file will now have local variables $var1, and $var2 available to it.  
+2. With just the $data array, $this->render( array( 'var1' => 'value1', 'var2' => 'value2' ) );
+	* This will still render a file in your views directory with the same name as the method that called the render() method, however the view file will now have local variables $var1, and $var2 available to it.
 
-3. With both $view and $data, $this->render( 'my_view', array( 'var1' => 'value1', 'var2' => 'value2' ) );  
-	* This will render a view file located at views/my_view.php. That view file will have local variables $var1 and $var2 available to it.  
+3. With both $view and $data, $this->render( 'my_view', array( 'var1' => 'value1', 'var2' => 'value2' ) );
+	* This will render a view file located at views/my_view.php. That view file will have local variables $var1 and $var2 available to it.
 
-4. With $view but not $data, $this->render( 'my_view' );  
-	* This will render a view file located at views/my_view.php, but will not pass any data to that view.  
+4. With $view but not $data, $this->render( 'my_view' );
+	* This will render a view file located at views/my_view.php, but will not pass any data to that view.
 
 ```php
 <?php

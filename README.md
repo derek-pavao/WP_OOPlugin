@@ -273,7 +273,7 @@ class My_Test_Controller extends WP_OOPlugin_Controller {
 ?>
 ```
 
-```php
+```html
 <!--  views/my_sweet_view.php 
       This view file will have two local variables, $class_name and $id_name
 -->

@@ -157,7 +157,7 @@ deleting post meta where appropriate.
 __DEFINING CUSTOM ADMIN COLUMNS__  
 By default WordPress does not include any custom fields in the admin table. WP\_OOPlugin puts an instance variable 
 in your custom post type class (i.e. Employees) to define which custom fields should be in your admin table view.
-The instance varible is called $custom_admin_columns and is a sequential array of custom field names.  
+The instance varible is called $custom\_admin\_columns and is a sequential array of custom field names.  
 __NOTE:__ The sorting functionality does not currently work when defining custom admin columns but is on my todo list.
 
 ```php

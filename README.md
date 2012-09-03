@@ -10,6 +10,7 @@ Table of Contents:
 * [Why WP_OOPlugin?](#why-wp_ooplugin)
 * [Directory Structure](#directory-structure)
 * [How to define custom post types](#how-to-define-custom-post-types)
+* [How to call WordPress hooks](#how-to-call-wordpress-hooks)
 
 - - - 
   
@@ -84,6 +85,8 @@ Your class name should also be the plural version of whatever you want to call y
 also extend WP_OOPlugin_CPT.
 ```php
 <?php
+// custom_post_types/Employees.php
+
 class Employees extends WP_OOPlugin_CPT {
   // define your custom post type here
 }
@@ -115,6 +118,8 @@ extended in the future to handle radio buttons, checkboxes, textareas etc.
 
 ```php
 <?php
+// custom_post_types/Employees.php
+
 class Employees extends WP_OOPlugin_CPT {
   
   	// This $public instance variable corressponds directly to the public argument given to WordPress' register_post_type()
@@ -162,6 +167,8 @@ __NOTE:__ The sorting functionality does not currently work when defining custom
 
 ```php
 <?php
+// custom_post_types/Employees.php
+
 class Employees extends WP_OOPlugin_CPT {
 	// ... other code here for defining the cpt
 	
@@ -174,6 +181,52 @@ class Employees extends WP_OOPlugin_CPT {
 	// ... other code here for defining the cpt
 ?>
 ```
+
+How To Call WordPress Hooks
+---------------------------
+[Back to top](#wp_ooplugin)  
+When first starting to write WordPress plugins I wrote plugins wrapped in a PHP class. Calling
+add_action() or add_filter() in my constructor and calling methods of that class as the hook callback. This is a pretty
+typical pattern for a WordPress plugin developer. My only issue I found with this pattern was that I was constantly
+scrolling back to the top of my class file to inspect the constructor to remind myself of either a method name,
+or which hook a method is being called on. With WP_OOPlugin I use a convention to naming the methods in your class and
+your files should be located in your controllers directory.
+
+__File Name:__  
+Your file can be named anything you want with _Controller appended to it. The first letter of each word should be 
+capitalized, and words should be separated by an underscore. \<Your_Descriptive_Name\>_Controller.php
+
+__Class Name:__  
+Your class name should be the same as your file name. (\<Your_Descriptive_Name\>_Controller) and it must extend
+WP_OOPlugin_Controller.
+
+__Calling WordPress Hooks:__  
+Instead of using add_action() or add_filter(), WP_OOPlugin provides a naming convention for calling WordPress hooks.
+Your method name is to start with action or filter depending if you are calling an action or filter hook respectively,
+followed by an underscore and the action name, followed by __two__ underscores and a descriptive name telling
+what that method is doing (action_HOOK_NAME__DESCRIPTIVE_NAME). Putting the portion with the two underscores and a 
+descriptive name is completely optional. The only reason for having this is so you can have more than one method executed
+on the same hook.
+
+```php
+<?php
+// controllers/My_Test_Controller.php
+
+class My_Test_Controller extends WP_OOPlugin_Controller {
+
+	function action_admin_init(){
+		// perform some action on the admin_init hook
+	}
+
+	function action_admin_init__perform_setup_tasks(){
+		// perform some additional setup tasks on admin_init
+	}
+
+}
+?>
+```
+
+[Back to top](#wp_ooplugin)
 
 To Be Continued...
 ------------------

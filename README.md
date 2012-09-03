@@ -244,6 +244,7 @@ a set of key value pairs to pass into the view where the key will be the name of
 
 Calling render without specifying $view will try to render a file in your views directory with the same name as
 the method that called it. Render can be called four different ways.  
+
 1. With no parameters, $this->render().  
 	* This will render a file in your views directory with the same name as the method that called the render() method  
 2. With just the $data array, $this->render( array( 'var1' => 'value1', 'var2' => 'value2' ) );  

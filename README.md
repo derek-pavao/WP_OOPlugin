@@ -267,6 +267,9 @@ class My_Test_Controller extends WP_OOPlugin_Controller {
 			'id_name' => 'my-sweet-css-id'
 		));
 		
+		// if we had left off the first parameter ('my_sweet_view'), render() would
+		// try to render views/action_admin_init.php
+		
 	}
 
 

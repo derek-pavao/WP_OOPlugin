@@ -239,8 +239,8 @@ and reopen your php tag and continue with your class, this just feels wrong and 
 With WP_OOPlugin both controller classes and custom post type classes have a special method called render. The render
 method allows you to put all the html output required by your plugin into a view file inside your views directory.
 
-The render method takes two parameters, both are completely optional. The first parameter (string) $view is the name of
-the file in your views directory you want to render excluding the .php extension. The second parameter (array) $data is
+The render method takes two parameters, both are completely optional. The first parameter, (string) $view, is the name of
+the file in your views directory you want to render excluding the .php extension. The second parameter, (array) $data, is
 a set of key value pairs to pass into the view where the key will be the name of the variable when you are in your view file.
 
 Calling render without specifying $view will try to render a file in your views directory with the same name as
@@ -268,7 +268,7 @@ class My_Test_Controller extends WP_OOPlugin_Controller {
 			'id_name' => 'my-sweet-css-id'
 		));
 		
-		// if we had left off the first parameter ('my_sweet_view'), render() would
+		// if we had left off the first parameter 'my_sweet_view', render() would
 		// try to render views/action_admin_init.php
 		
 	}

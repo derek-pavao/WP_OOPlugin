@@ -18,7 +18,9 @@ Table of Contents:
 What is WP_OOPlugin?
 -------------------
 [Back to top](#wp_ooplugin)  
-WP_OOPlugin is a WordPress plugin intended to be used by plugin authors to help ease and speed up plugin development.  
+WP_OOPlugin is a WordPress plugin intended to be used by plugin authors to help ease and speed up plugin development.
+WP_OOPlugin doesn't "DO" anything on its own. It only provides tools for making writing a wordpress plugin easier.
+A WordPress developer would install WP_OOPlugin and then begin writing their own plugin extending WP_OOPlugins classes
 [Back to top](#wp_ooplugin)
   
 Why WP_OOPlugin?
